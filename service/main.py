@@ -11,10 +11,8 @@ app.include_router(main_router)
 providers = ['CPUExecutionProvider']
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(BASE_DIR, "models", "effect_quatized.onnx")
-
+model_path = os.path.join(BASE_DIR, "effect_quatized.onnx")  # <- removed "models"
 m = rt.InferenceSession(model_path, providers=providers)
-
 
 @app.get("/")
 def root():
