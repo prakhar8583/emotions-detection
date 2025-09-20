@@ -1,15 +1,20 @@
 from fastapi import FastAPI
 from service.api.api import main_router
 import onnxruntime as rt
+import os
+
 
 app = FastAPI(project_name="Emotion Detection method")
 
 app.include_router(main_router)
 
 providers = ['CPUExecutionProvider']
-m = rt.InferenceSession(
-        r"C:\Users\RKCINDIA\object_detection -task\effect_quatized.onnx",
-        providers=providers)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, "models", "effect_quatized.onnx")
+
+m = rt.InferenceSession(model_path, providers=providers)
+
 
 @app.get("/")
 def root():
